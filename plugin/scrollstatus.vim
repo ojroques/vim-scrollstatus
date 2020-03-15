@@ -15,15 +15,16 @@ function! s:init() abort
   let s:symbol_bar = get(g:, 'scrollstatus_symbol_bar', '|')
   let s:symbol_cursor = get(g:, 'scrollstatus_symbol_cursor', '')
 
-  let s:numberLines = 1
   let s:line = 0
+  let s:numberLines = 1
   let s:firstVisibleLine = 0
   let s:lastVisibleLine = 0
 
-  let s:scrollStatus = []
   let s:binSize = 1
   let s:binBarStart = 0
   let s:binBarEnd = 0
+
+  let s:scrollStatus = []
 
   for i in range(s:size)
     call add(s:scrollStatus, s:symbol_track)
@@ -99,9 +100,9 @@ function! ScrollStatus() abort
 
   if !s:isSameLine() && s:symbol_cursor != ''
     let s:line = line('.') - 1
-    let l:numberVisibleLines = s:lastVisibleLine - s:firstVisibleLine + 1
     let l:barSize = s:binBarEnd - s:binBarStart + 1
-    let l:binWindowSize = s:getBinSize(l:numberVisibleLines, l:barSize)
+    let l:binWindowSize =
+          \ s:getBinSize(s:lastVisibleLine - s:firstVisibleLine + 1, l:barSize)
     let l:binCursor = s:getBin(l:binWindowSize,
           \ s:line - s:firstVisibleLine, l:barSize)
     let s:scrollStatus[s:binBarStart + l:binCursor] = s:symbol_cursor

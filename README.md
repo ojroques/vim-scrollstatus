@@ -2,7 +2,7 @@
 
 A scrollbar for Vim statusline.
 
-![vim-scrollstatus](statusbar.png)
+![vim-scrollstatus](statusline.png)
 
 ## Installation
 
@@ -20,7 +20,12 @@ With [vim-airline](https://github.com/vim-airline/vim-airline):
 let g:airline_section_x = '%{ScrollStatus()}'
 ```
 
-To also show cursor relative position in the window (with `X` here):
+By default the scrollbar is 20 character-width. You can change that with:
+```vim
+let s:scrollstatus_size = '12'
+```
+
+To also show the cursor relative window position (with a `X` in this case):
 ```vim
 let s:scrollstatus_symbol_cursor = 'X'
 ```
@@ -29,7 +34,7 @@ You can also change the symbols used for the bar and background track, see examp
 
 ## Example
 
-To reproduce the scrollbar from the screenshot:
+To reproduce the statusline from the screenshot:
 ```vim
 let s:scrollstatus_symbol_track = '░'
 let s:scrollstatus_symbol_bar = '█'
