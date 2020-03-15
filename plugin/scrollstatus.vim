@@ -15,14 +15,15 @@ function! s:init() abort
   let s:symbol_bar = get(g:, 'scrollstatus_symbol_bar', '|')
   let s:symbol_cursor = get(g:, 'scrollstatus_symbol_cursor', '')
 
-  let s:line = 0
-  let s:numberLines = 1
-  let s:firstVisibleLine = 0
-  let s:lastVisibleLine = 0
+  let s:line = -1
+  let s:numberLines = -1
+  let s:firstVisibleLine = -1
+  let s:lastVisibleLine = -1
+  let s:numberVisibleLines = -1
 
-  let s:binSize = 1
-  let s:binBarStart = 0
-  let s:binBarEnd = 0
+  let s:binSize = -1
+  let s:binBarStart = -1
+  let s:barSize = -1
 
   let s:scrollStatus = []
 
@@ -32,7 +33,7 @@ function! s:init() abort
 endfunction
 
 function! s:getBinSize(numberLines, containerSize) abort
-  let l:binSize = float2nr(floor(floor(a:numberLines) / a:containerSize))
+  let l:binSize = float2nr(round(floor(a:numberLines) / a:containerSize))
 
   if l:binSize < 1
     return 1
@@ -51,17 +52,31 @@ function! s:getBin(binSize, line, containerSize) abort
   return l:bin
 endfunction
 
-function! s:isSameWindow() abort
-  return line('w0') - 1 == s:firstVisibleLine &&
-        \ line('w$') - 1 == s:lastVisibleLine
+function! s:getBarSize(numberLines, numberVisibleLines, containerSize) abort
+  return float2nr(round(floor(a:numberVisibleLines * a:containerSize) / a:numberLines))
+endfunction
+
+function! s:isSameLine() abort
+  return line('.') - 1 == s:line
 endfunction
 
 function! s:isSameNumberLines() abort
   return line('$') == s:numberLines
 endfunction
 
-function! s:isSameLine() abort
-  return line('.') == s:line
+function! s:isSameWindow() abort
+  return line('w0') - 1 == s:firstVisibleLine &&
+        \ line('w$') - 1 == s:lastVisibleLine
+endfunction
+
+function! s:fillBar(binBarStart, barSize, symbol) abort
+  for i in range(a:binBarStart, a:binBarStart + a:barSize)
+    if i > s:size - 1
+      break
+    endif
+
+    let s:scrollStatus[i] = a:symbol
+  endfor
 endfunction
 
 function! ScrollStatus() abort
@@ -70,11 +85,11 @@ function! ScrollStatus() abort
   endif
 
   if line('w$') < line('w0')
-    return s:scrollStatus
+    return join(s:scrollStatus, '')
   endif
 
   if s:isSameLine() && s:isSameNumberLines() && s:isSameWindow()
-    return s:scrollStatus
+    return join(s:scrollStatus, '')
   endif
 
   if !s:isSameNumberLines()
@@ -85,27 +100,26 @@ function! ScrollStatus() abort
   if !s:isSameWindow()
     let s:firstVisibleLine = line('w0') - 1
     let s:lastVisibleLine = line('w$') - 1
+    let s:numberVisibleLines = s:lastVisibleLine - s:firstVisibleLine + 1
   endif
 
-  for i in range(s:binBarStart, s:binBarEnd)
-    let s:scrollStatus[i] = s:symbol_track
-  endfor
+  call s:fillBar(s:binBarStart, s:barSize, s:symbol_track)
 
   let s:binBarStart = s:getBin(s:binSize, s:firstVisibleLine, s:size)
-  let s:binBarEnd = s:getBin(s:binSize, s:lastVisibleLine, s:size)
+  let s:barSize = s:getBarSize(s:numberLines, s:numberVisibleLines, s:size)
 
-  for i in range(s:binBarStart, s:binBarEnd)
-    let s:scrollStatus[i] = s:symbol_bar
-  endfor
+  call s:fillBar(s:binBarStart, s:barSize, s:symbol_bar)
 
   if !s:isSameLine() && s:symbol_cursor != ''
     let s:line = line('.') - 1
-    let l:barSize = s:binBarEnd - s:binBarStart + 1
-    let l:binWindowSize =
-          \ s:getBinSize(s:lastVisibleLine - s:firstVisibleLine + 1, l:barSize)
-    let l:binCursor = s:getBin(l:binWindowSize,
-          \ s:line - s:firstVisibleLine, l:barSize)
-    let s:scrollStatus[s:binBarStart + l:binCursor] = s:symbol_cursor
+    let l:binWindowSize = s:getBinSize(s:numberVisibleLines, s:barSize)
+    let l:binCursor = s:getBin(l:binWindowSize, s:line - s:firstVisibleLine, s:barSize)
+
+    if s:binBarStart + l:binCursor <= s:size - 1
+      let s:scrollStatus[s:binBarStart + l:binCursor] = s:symbol_cursor
+    else
+      let s:scrollStatus[s:size - 1] = s:symbol_cursor
+    endif
   endif
 
   return join(s:scrollStatus, '')
