@@ -20,24 +20,24 @@ With [vim-airline](https://github.com/vim-airline/vim-airline):
 let g:airline_section_x = '%{ScrollStatus()}'
 ```
 
-By default the scrollbar is 20 character-width. You can change that with:
+By default the scrollbar is 20 characters long. You can change that with:
 ```vim
-let s:scrollstatus_size = '12'
+let g:scrollstatus_size = 12
 ```
 
 To also show the cursor relative window position (with a `X` in this case):
 ```vim
-let s:scrollstatus_symbol_cursor = 'X'
+let g:scrollstatus_symbol_cursor = 'X'
 ```
 
-You can also change the symbols used for the bar and background track, see example below.
+You can also change the symbols used for the bar and background track, see example below. By default they are set to `-` for the track and `|` for the bar.
 
 ## Example
 
 To reproduce the statusline from the screenshot:
 ```vim
-let s:scrollstatus_symbol_track = '░'
-let s:scrollstatus_symbol_bar = '█'
+let g:scrollstatus_symbol_track = '░'
+let g:scrollstatus_symbol_bar = '█'
 let g:airline_section_x = '%{ScrollStatus()}'
 let g:airline_section_y = airline#section#create_right(['filetype'])
 let g:airline_section_z = airline#section#create([
