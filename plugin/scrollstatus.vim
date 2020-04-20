@@ -13,17 +13,15 @@ function! s:init() abort
   let s:size = get(g:, 'scrollstatus_size', 20)
   let s:symbol_track = get(g:, 'scrollstatus_symbol_track', '-')
   let s:symbol_bar = get(g:, 'scrollstatus_symbol_bar', '|')
-  let s:symbol_cursor = get(g:, 'scrollstatus_symbol_cursor', '')
 
-  let s:line = -1
   let s:numberLines = -1
   let s:firstVisibleLine = -1
   let s:lastVisibleLine = -1
   let s:numberVisibleLines = -1
 
-  let s:binSize = -1
-  let s:binBarStart = -1
-  let s:barSize = -1
+  let s:binSize = 0
+  let s:binBarStart = 0
+  let s:barSize = 0
 
   let s:scrollStatus = []
 
@@ -56,10 +54,6 @@ function! s:getBarSize(numberLines, numberVisibleLines, containerSize) abort
   return float2nr(round(floor(a:numberVisibleLines * a:containerSize) / a:numberLines))
 endfunction
 
-function! s:isSameLine() abort
-  return line('.') - 1 == s:line
-endfunction
-
 function! s:isSameNumberLines() abort
   return line('$') == s:numberLines
 endfunction
@@ -88,7 +82,7 @@ function! ScrollStatus() abort
     return join(s:scrollStatus, '')
   endif
 
-  if s:isSameLine() && s:isSameNumberLines() && s:isSameWindow()
+  if s:isSameNumberLines() && s:isSameWindow()
     return join(s:scrollStatus, '')
   endif
 
@@ -109,18 +103,6 @@ function! ScrollStatus() abort
   let s:barSize = s:getBarSize(s:numberLines, s:numberVisibleLines, s:size)
 
   call s:fillBar(s:binBarStart, s:barSize, s:symbol_bar)
-
-  if !s:isSameLine() && s:symbol_cursor != ''
-    let s:line = line('.') - 1
-    let l:binWindowSize = s:getBinSize(s:numberVisibleLines, s:barSize)
-    let l:binCursor = s:getBin(l:binWindowSize, s:line - s:firstVisibleLine, s:barSize)
-
-    if s:binBarStart + l:binCursor <= s:size - 1
-      let s:scrollStatus[s:binBarStart + l:binCursor] = s:symbol_cursor
-    else
-      let s:scrollStatus[s:size - 1] = s:symbol_cursor
-    endif
-  endif
 
   return join(s:scrollStatus, '')
 endfunction
