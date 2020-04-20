@@ -25,11 +25,6 @@ By default the scrollbar is 20 characters long. You can change that with:
 let g:scrollstatus_size = 12
 ```
 
-To also show the cursor relative window position (with a `X` in this case):
-```vim
-let g:scrollstatus_symbol_cursor = 'X'
-```
-
 You can also change the symbols used for the bar and background track, see example below. By default they are set to `-` for the track and `|` for the bar.
 
 ## Example
