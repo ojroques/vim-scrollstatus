@@ -11,8 +11,8 @@ let g:loaded_scrollstatus = v:true
 
 function! s:init() abort
   let s:size = get(g:, 'scrollstatus_size', 20)
-  let s:symbol_track = get(g:, 'scrollstatus_symbol_track', '-')
-  let s:symbol_bar = get(g:, 'scrollstatus_symbol_bar', '|')
+  let s:symbol_track = get(g:, 'scrollstatus_symbol_track', '░')
+  let s:symbol_bar = get(g:, 'scrollstatus_symbol_bar', '█')
 
   let s:numberLines = -1
   let s:firstVisibleLine = -1
