@@ -2,7 +2,7 @@
 
 A scrollbar for Vim statusline.
 
-![vim-scrollstatus](statusline.png)
+![vim-scrollstatus](demo.gif)
 
 ## Installation
 
@@ -31,8 +31,8 @@ You can also change the symbols used for the bar and background track, see examp
 
 To reproduce the statusline from the screenshot:
 ```vim
-let g:scrollstatus_symbol_track = '░'  " default symbol
-let g:scrollstatus_symbol_bar = '█'    " default symbol
+let g:scrollstatus_symbol_track = '░'  " default symbol, can be omitted
+let g:scrollstatus_symbol_bar = '█'    " default symbol, can be omitted
 let g:airline_section_x = '%{ScrollStatus()}'
 let g:airline_section_y = airline#section#create_right(['filetype'])
 let g:airline_section_z = airline#section#create([
