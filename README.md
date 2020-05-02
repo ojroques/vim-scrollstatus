@@ -25,7 +25,7 @@ By default the scrollbar is 20 characters long. You can change that with:
 let g:scrollstatus_size = 12
 ```
 
-You can also change the symbols used for the bar and background track, see example below. By default they are set to `-` for the track and `|` for the bar.
+You can also change the symbols used for the bar and background track, see example below. By default they are set to `░` for the track and `█` for the bar.
 
 ## Example
 
