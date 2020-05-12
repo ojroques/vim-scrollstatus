@@ -7,7 +7,7 @@ if exists('g:loaded_scrollstatus') || &compatible
   finish
 endif
 
-let g:loaded_scrollstatus = v:true
+let g:loaded_scrollstatus = 1
 
 function! s:init() abort
   let s:size = get(g:, 'scrollstatus_size', 20)
