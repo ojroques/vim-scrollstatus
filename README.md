@@ -35,6 +35,11 @@ let g:scrollstatus_symbol_bar = '|'
 
 To reproduce the statusline from the screenshot:
 ```vim
+call plug#begin()
+Plug 'vim-airline/vim-airline'
+Plug 'ojroques/vim-scrollstatus'
+call plug#end()
+
 let g:airline_section_x = '%{ScrollStatus()} '
 let g:airline_section_y = airline#section#create_right(['filetype'])
 let g:airline_section_z = airline#section#create([
