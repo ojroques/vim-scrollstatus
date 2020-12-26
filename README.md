@@ -15,9 +15,19 @@ call plug#end()
 ```
 
 ## Usage
-Integration with [vim-airline](https://github.com/vim-airline/vim-airline):
+With [vim-airline](https://github.com/vim-airline/vim-airline):
 ```vim
 let g:airline_section_x = '%{ScrollStatus()}'
+```
+
+With [lightline.vim](https://github.com/itchyny/lightline.vim):
+```vim
+let g:lightline = {
+  \ 'active': {
+  \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype', 'charvaluehex']]
+  \ },
+  \ 'component_function': {'percent': 'ScrollStatus'},
+  \ }
 ```
 
 By default the scrollbar is 20 characters long. You can set another value with:
