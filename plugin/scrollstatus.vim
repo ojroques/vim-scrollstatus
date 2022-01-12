@@ -1,5 +1,6 @@
 " vim-scrollstatus
-" Author: Olivier Roques
+" By Olivier Roques
+" github.com/ojroques
 
 scriptencoding utf-8
 

@@ -1,13 +1,12 @@
 # vim-scrollstatus
 
-A scrollbar for Vim statusline.
+A scrollbar for Vim statusline. For Neovim, check out
+[nvim-scrollbar](https://github.com/ojroques/nvim-scrollbar).
 
 ![vim-scrollstatus](demo.gif)
 
 ## Installation
-
-With [vim-plug](https://github.com/junegunn/vim-plug), in your `.vimrc`:
-
+With [vim-plug](https://github.com/junegunn/vim-plug):
 ```vim
 call plug#begin()
 Plug 'ojroques/vim-scrollstatus'
@@ -30,6 +29,7 @@ let g:lightline = {
   \ }
 ```
 
+## Configuration
 By default the scrollbar is 20 characters long. You can set another value with:
 ```vim
 let g:scrollstatus_size = 12
@@ -42,7 +42,6 @@ let g:scrollstatus_symbol_bar = '|'
 ```
 
 ## Example
-
 To reproduce the statusline from the screenshot:
 ```vim
 call plug#begin()
