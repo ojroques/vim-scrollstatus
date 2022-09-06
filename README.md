@@ -3,7 +3,7 @@
 A scrollbar for Vim statusline. For Neovim, check out
 [nvim-scrollbar](https://github.com/ojroques/nvim-scrollbar).
 
-![vim-scrollstatus](demo.gif)
+![demo](https://user-images.githubusercontent.com/23409060/188604635-0971e70b-f58e-4bc9-91ce-7ac0f0b496cb.gif)
 
 ## Installation
 With [vim-plug](https://github.com/junegunn/vim-plug):
